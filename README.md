@@ -63,6 +63,18 @@ Six-stage pipeline. Each stage does one thing well:
 
 ## Quick Start
 
+Zero-install — run it directly (like `npx`):
+
+```bash
+# Using uvx (recommended — fastest, no install)
+uvx --from git+https://github.com/SujalXplores/ghost.dev.git ghost run https://github.com/user/repo
+
+# Using pipx
+pipx run --spec git+https://github.com/SujalXplores/ghost.dev.git ghost run https://github.com/user/repo
+```
+
+Or install it permanently:
+
 ```bash
 pip install git+https://github.com/SujalXplores/ghost.dev.git
 ghost run https://github.com/user/repo
