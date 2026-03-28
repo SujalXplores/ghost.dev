@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>👻 ghost.dev — fastapi/fastapi</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --bg: #0a0e14;
+      --bg2: #0d1117;
+      --card: #151b23;
+      --card2: #1c2333;
+      --border: #2a3140;
+      --border2: #363f52;
+      --text: #c4cdd9;
+      --text2: #8b95a5;
+      --white: #e6edf3;
+      --green: #2dd4a8;
+      --green2: #1a7a5a;
+      --yellow: #e8b931;
+      --yellow2: #8a6d1b;
+      --red: #f0544c;
+      --red2: #8b2e2a;
+      --blue: #5b9cf6;
+      --cyan: #39d2c0;
+      --purple: #b48ead;
+      --orange: #d19a66;
+      --mono: 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'Fira Code', monospace;
+      --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    }
+
+    html {
+      font-size: 15px
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.65;
+      min-height: 100vh
+    }
+
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem
+    }
+  </style>
+  <style>
+    /* Header */
+    .hero {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .hero-icon {
+      font-size: 3.5rem;
+      margin-bottom: .5rem
+    }
+
+    .hero h1 {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--white);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-bottom: .25rem
+    }
+
+    .hero .repo {
+      font-size: 1.4rem;
+      color: var(--cyan);
+      font-family: var(--mono);
+      text-decoration: none;
+      margin-bottom: .5rem;
+      display: block
+    }
+
+    .hero .repo:hover {
+      text-decoration: underline
+    }
+
+    .hero .meta {
+      color: var(--text2);
+      font-size: .8rem
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem
+    }
+
+    .card h2 {
+      color: var(--white);
+      font-size: 1rem;
+      font-family: var(--mono);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem
+    }
+
+    .card h2 .icon {
+      font-size: 1.1rem
+    }
+
+    /* Grade */
+    .grade-card {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--card) 0%, var(--card2) 100%)
+    }
+
+    .grade-letter {
+      font-size: 4.5rem;
+      font-weight: 800;
+      font-family: var(--mono);
+      line-height: 1
+    }
+
+    .grade-letter.good {
+      color: var(--green)
+    }
+
+    .grade-letter.mid {
+      color: var(--yellow)
+    }
+
+    .grade-letter.bad {
+      color: var(--red)
+    }
+
+    .grade-sub {
+      color: var(--text2);
+      font-size: .85rem;
+      margin-top: .5rem
+    }
+
+    .score-track {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      margin: 1rem auto;
+      max-width: 400px;
+      overflow: hidden
+    }
+
+    .score-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width .6s ease
+    }
+
+    /* Stats grid */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.25rem
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-align: center
+    }
+
+    .stat .val {
+      font-size: 1.6rem;
+      font-weight: 700;
+      font-family: var(--mono);
+      color: var(--white)
+    }
+
+    .stat .label {
+      font-size: .75rem;
+      color: var(--text2);
+      margin-top: .25rem;
+      text-transform: uppercase;
+      letter-spacing: .04em
+    }
+
+    /* Bar chart */
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: .6rem
+    }
+
+    .bar-label {
+      flex: 0 0 200px;
+      font-size: .8rem;
+      color: var(--text2);
+      text-align: right
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 20px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width .4s ease
+    }
+
+    .bar-count {
+      flex: 0 0 40px;
+      font-size: .8rem;
+      color: var(--text2);
+      font-family: var(--mono)
+    }
+  </style>
+  <style>
+    /* Steps */
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      padding: .75rem 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .step:last-child {
+      border-bottom: none
+    }
+
+    .step-icon {
+      flex: 0 0 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .8rem;
+      margin-top: .1rem
+    }
+
+    .step-icon.ok {
+      background: var(--green2);
+      color: var(--green)
+    }
+
+    .step-icon.warn {
+      background: var(--yellow2);
+      color: var(--yellow)
+    }
+
+    .step-icon.fail {
+      background: var(--red2);
+      color: var(--red)
+    }
+
+    .step-icon.neutral {
+      background: var(--border);
+      color: var(--text2)
+    }
+
+    .step-body {
+      flex: 1;
+      min-width: 0
+    }
+
+    .step-cmd {
+      font-family: var(--mono);
+      font-size: .85rem;
+      color: var(--white);
+      word-break: break-all
+    }
+
+    .step-meta {
+      font-size: .75rem;
+      color: var(--text2);
+      margin-top: .2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap
+    }
+
+    .step-friction {
+      margin-top: .4rem;
+      padding: .5rem .75rem;
+      background: var(--bg2);
+      border-left: 3px solid var(--red);
+      border-radius: 0 6px 6px 0;
+      font-size: .8rem
+    }
+
+    .step-recovery {
+      border-left-color: var(--green)
+    }
+
+    /* Confidence badge */
+    .conf {
+      display: inline-block;
+      padding: .1rem .4rem;
+      border-radius: 3px;
+      font-size: .7rem;
+      font-family: var(--mono);
+      font-weight: 600
+    }
+
+    .conf.high {
+      background: var(--green2);
+      color: var(--green)
+    }
+
+    .conf.med {
+      background: var(--yellow2);
+      color: var(--yellow)
+    }
+
+    .conf.low {
+      background: var(--red2);
+      color: var(--red)
+    }
+
+    /* Severity badge */
+    .sev {
+      display: inline-block;
+      padding: .15rem .5rem;
+      border-radius: 3px;
+      font-size: .7rem;
+      font-family: var(--mono);
+      font-weight: 700;
+      text-transform: uppercase
+    }
+
+    .sev.critical {
+      background: var(--red2);
+      color: var(--red)
+    }
+
+    .sev.high {
+      background: var(--red2);
+      color: #f09090
+    }
+
+    .sev.medium {
+      background: var(--yellow2);
+      color: var(--yellow)
+    }
+
+    .sev.low {
+      background: var(--border);
+      color: var(--text2)
+    }
+
+    /* Details / accordion */
+    .evt {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: .75rem;
+      overflow: hidden
+    }
+
+    .evt summary {
+      padding: .75rem 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .85rem;
+      color: var(--white);
+      transition: background .15s
+    }
+
+    .evt summary:hover {
+      background: var(--card2)
+    }
+
+    .evt[open] summary {
+      border-bottom: 1px solid var(--border)
+    }
+
+    .evt-body {
+      padding: 1rem;
+      font-size: .8rem;
+      display: grid;
+      gap: .5rem
+    }
+
+    .evt-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: .5rem
+    }
+
+    .evt-row dt {
+      color: var(--text2);
+      font-weight: 600
+    }
+
+    .evt-row dd {
+      color: var(--text)
+    }
+
+    pre.err {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: .75rem;
+      overflow-x: auto;
+      max-height: 180px;
+      font-size: .75rem;
+      color: var(--red);
+      font-family: var(--mono);
+      line-height: 1.4
+    }
+
+    /* Fix cards */
+    .fix {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: .75rem
+    }
+
+    .fix-file {
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--cyan);
+      margin-bottom: .5rem
+    }
+
+    .fix-diff {
+      font-family: var(--mono);
+      font-size: .8rem;
+      line-height: 1.5
+    }
+
+    .fix-diff .old {
+      color: var(--red);
+      background: rgba(240, 84, 76, .08);
+      padding: .2rem .4rem;
+      border-radius: 3px;
+      display: block;
+      margin-bottom: .25rem
+    }
+
+    .fix-diff .new {
+      color: var(--green);
+      background: rgba(45, 212, 168, .08);
+      padding: .2rem .4rem;
+      border-radius: 3px;
+      display: block
+    }
+
+    .fix-reason {
+      font-size: .75rem;
+      color: var(--text2);
+      margin-top: .4rem
+    }
+
+    /* Docs list */
+    .doc-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem
+    }
+
+    .doc-tag {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: .2rem .5rem;
+      font-family: var(--mono);
+      font-size: .7rem;
+      color: var(--text2)
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text2);
+      font-size: .75rem;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem
+    }
+
+    footer a {
+      color: var(--cyan);
+      text-decoration: none
+    }
+
+    footer a:hover {
+      text-decoration: underline
+    }
+
+    /* Responsive */
+    @media(max-width:640px) {
+      .wrap {
+        padding: 1rem
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .bar-label {
+        flex: 0 0 120px;
+        font-size: .7rem
+      }
+
+      .evt-row {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+  <style>
+    /* Print stylesheet */
+    @media print {
+      body {
+        background: #fff;
+        color: #222;
+        font-size: 12px
+      }
+
+      .wrap {
+        max-width: 100%;
+        padding: 0
+      }
+
+      .card {
+        border: 1px solid #ccc;
+        background: #fff;
+        break-inside: avoid
+      }
+
+      .grade-card {
+        background: #f8f8f8
+      }
+
+      .grade-letter.good,
+      .grade-letter.mid,
+      .grade-letter.bad {
+        color: #222
+      }
+
+      .stat {
+        background: #f8f8f8;
+        border-color: #ccc
+      }
+
+      .stat .val {
+        color: #222
+      }
+
+      .hero {
+        border-bottom-color: #ccc
+      }
+
+      .hero .repo {
+        color: #0066cc
+      }
+
+      .bar-fill {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact
+      }
+
+      .sev {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact
+      }
+
+      .step-icon {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact
+      }
+
+      pre.err {
+        background: #f5f5f5;
+        color: #c00;
+        border-color: #ccc
+      }
+
+      footer a {
+        color: #0066cc
+      }
+
+      .evt[open] .evt-body {
+        display: grid
+      }
+    }
+
+    /* Skip to content (accessibility) */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--cyan);
+      color: var(--bg);
+      padding: .5rem 1rem;
+      z-index: 100;
+      font-size: .85rem;
+      border-radius: 0 0 6px 0
+    }
+
+    .skip-link:focus {
+      top: 0
+    }
+  </style>
+
+</head>
+
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="wrap" id="main-content" role="main">
+
+    <!-- HERO -->
+    <header class="hero" aria-label="Report summary">
+      <div class="hero-icon">👻</div>
+      <h1>ghost.dev friction report</h1>
+      <a class="repo" href="https://github.com/fastapi/fastapi" target="_blank" rel="noopener">fastapi/fastapi</a>
+      <div class="meta">2026-03-28 22:08 UTC · 23 docs scanned · 4 steps extracted · python</div>
+    </header>
+
+    <!-- GRADE -->
+    <div class="card grade-card" style="margin-top:1.25rem">
+      <div
+        class="grade-letter good">
+        A+</div>
+      <div class="grade-sub">Friction Score: 0 / 100 — Low Friction</div>
+      <div class="score-track">
+        <div class="score-fill"
+          style="width:3%;background:var(--green)">
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat">
+        <div class="val">78.5s</div>
+        <div class="label">Total Duration</div>
+      </div>
+      
+      
+      <div class="stat">
+        <div class="val">0</div>
+        <div class="label">Friction Events</div>
+      </div>
+      <div class="stat">
+        <div class="val">4</div>
+        <div class="label">Setup Steps</div>
+      </div>
+      <div class="stat">
+        <div class="val">23</div>
+        <div class="label">Docs Scanned</div>
+      </div>
+    </div>
+
+    <!-- DOCS FOUND -->
+    <div class="card">
+      <h2><span class="icon">📄</span> Documentation Scanned</h2>
+      <div class="doc-grid">
+        
+        <span class="doc-tag">README.md</span>
+        
+        <span class="doc-tag">CONTRIBUTING.md</span>
+        
+        <span class="doc-tag">pyproject.toml</span>
+        
+        <span class="doc-tag">.python-version</span>
+        
+        <span class="doc-tag">.github\workflows\add-to-project.yml</span>
+        
+        <span class="doc-tag">.github\workflows\build-docs.yml</span>
+        
+        <span class="doc-tag">.github\workflows\contributors.yml</span>
+        
+        <span class="doc-tag">.github\workflows\deploy-docs.yml</span>
+        
+        <span class="doc-tag">.github\workflows\detect-conflicts.yml</span>
+        
+        <span class="doc-tag">.github\workflows\issue-manager.yml</span>
+        
+        <span class="doc-tag">.github\workflows\label-approved.yml</span>
+        
+        <span class="doc-tag">.github\workflows\labeler.yml</span>
+        
+        <span class="doc-tag">.github\workflows\latest-changes.yml</span>
+        
+        <span class="doc-tag">.github\workflows\notify-translations.yml</span>
+        
+        <span class="doc-tag">.github\workflows\people.yml</span>
+        
+        <span class="doc-tag">.github\workflows\pre-commit.yml</span>
+        
+        <span class="doc-tag">.github\workflows\publish.yml</span>
+        
+        <span class="doc-tag">.github\workflows\smokeshow.yml</span>
+        
+        <span class="doc-tag">.github\workflows\sponsors.yml</span>
+        
+        <span class="doc-tag">.github\workflows\test-redistribute.yml</span>
+        
+        <span class="doc-tag">.github\workflows\test.yml</span>
+        
+        <span class="doc-tag">.github\workflows\topic-repos.yml</span>
+        
+        <span class="doc-tag">.github\workflows\translate.yml</span>
+        
+      </div>
+    </div>
+
+    <!-- PREREQUISITES & ENVIRONMENT -->
+    
+    <div class="card">
+      <h2><span class="icon">⚙️</span> Detected Requirements</h2>
+      
+      <div style="margin-bottom:.75rem">
+        <div
+          style="font-size:.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem">
+          Prerequisites</div>
+        <div class="doc-grid">
+          <span class="doc-tag" style="border-color:var(--green2);color:var(--green)">Python >= 3.10 (as specified in pyproject.toml requires-python field)</span><span class="doc-tag" style="border-color:var(--green2);color:var(--green)">pip (Python package installer)</span><span class="doc-tag" style="border-color:var(--green2);color:var(--green)">Ability to create and activate a Python virtual environment</span>
+        </div>
+      </div>
+      
+      
+      <div style="margin-bottom:.75rem">
+        <div
+          style="font-size:.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem">
+          Environment Variables</div>
+        <div class="doc-grid">
+          <span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">GITHUB_TOKEN</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">FASTAPI_PR_TOKEN</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">FASTAPI_PEOPLE</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">FASTAPI_LATEST_CHANGES</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">FASTAPI_TRANSLATIONS</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">OPENAI_API_KEY</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">SPONSORS_TOKEN</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">PRE_COMMIT</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">SMOKESHOW_AUTH_KEY</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">SMOKESHOW_GITHUB_STATUS_DESCRIPTION</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">SMOKESHOW_GITHUB_COVERAGE_THRESHOLD</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">SMOKESHOW_GITHUB_CONTEXT</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">SMOKESHOW_GITHUB_TOKEN</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">SMOKESHOW_GITHUB_PR_HEAD_SHA</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">CLOUDFLARE_API_TOKEN</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">CLOUDFLARE_ACCOUNT_ID</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">PROJECTS_TOKEN</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">CONTEXT</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">COVERAGE_FILE</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">UV_NO_SYNC</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">INLINE_SNAPSHOT_DEFAULT_FLAGS</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">UV_PYTHON</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">UV_RESOLUTION</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">STARLETTE_SRC</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">GITHUB_CONTEXT</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">TOKEN</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">CONFIG</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">NUMBER</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">DEBUG</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">LANGUAGE</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">EN_PATH</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">COMMAND</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">COMMIT_IN_PLACE</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">MAX</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">SLEEP_INTERVAL</span><span class="doc-tag" style="border-color:var(--yellow2);color:var(--yellow)">PEOPLE_SLEEP_INTERVAL</span>
+        </div>
+      </div>
+      
+      
+      <div>
+        <div
+          style="font-size:.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:.4rem">
+          Implicit / Undocumented Requirements</div>
+        <div class="doc-grid">
+          <span class="doc-tag" style="border-color:var(--red2);color:var(--orange)">Knowledge of how to create and activate a Python virtual environment</span><span class="doc-tag" style="border-color:var(--red2);color:var(--orange)">The virtual environments documentation is linked but not reproduced inline (https://fastapi.tiangolo.com/virtual-environments/)</span><span class="doc-tag" style="border-color:var(--red2);color:var(--orange)">Python 3.10 or higher must be installed (stated in pyproject.toml but not explicitly in README installation steps)</span><span class="doc-tag" style="border-color:var(--red2);color:var(--orange)">Internet connectivity to download packages from PyPI</span><span class="doc-tag" style="border-color:var(--red2);color:var(--orange)">A terminal/shell environment to run commands</span><span class="doc-tag" style="border-color:var(--red2);color:var(--orange)">The fastapi dev command automatically reads main.py - the file must be named main.py or the path must be specified</span><span class="doc-tag" style="border-color:var(--red2);color:var(--orange)">uv is used as the package/project manager for development workflows (seen in CI workflows) but not mentioned in user-facing README installation steps</span><span class="doc-tag" style="border-color:var(--red2);color:var(--orange)">The project uses pdm-backend as the build system (pyproject.toml) but this is not required for end users</span>
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- EXTRACTED SETUP STEPS (plan) -->
+    
+    <div class="card">
+      <h2><span class="icon">🧠</span> Extracted Setup Steps</h2>
+      
+      <div class="step">
+        <div class="step-icon neutral">1</div>
+        <div class="step-body">
+          <div class="step-cmd">Create and activate a virtual environment</div>
+          <div class="step-meta">
+            <span>📎 README.md - Installation section</span>
+            <span
+              class="conf med">60% confidence</span>
+            <span>Create and activate a Python virtual environment before installing FastAPI</span>
+          </div>
+          
+          <div style="margin-top:.3rem;font-size:.75rem;color:var(--orange)">
+            ⚠️ Assumes: User knows how to create a Python virtual environment (e.g., python -m venv .venv), User knows how to activate the virtual environment on their OS (e.g., source .venv/bin/activate on Unix or .venv\Scripts\activate on Windows)
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="step">
+        <div class="step-icon neutral">2</div>
+        <div class="step-body">
+          <div class="step-cmd">pip install "fastapi[standard]"</div>
+          <div class="step-meta">
+            <span>📎 README.md - Installation section</span>
+            <span
+              class="conf high">95% confidence</span>
+            <span>Install FastAPI with standard optional dependencies including uvicorn, httpx, jinja2, python-multipart, email-validator, pydantic-settings, pydantic-extra-types, and fastapi-cli</span>
+          </div>
+          
+          <div style="margin-top:.3rem;font-size:.75rem;color:var(--orange)">
+            ⚠️ Assumes: pip is available in the activated virtual environment, Internet access is available to download packages
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="step">
+        <div class="step-icon neutral">3</div>
+        <div class="step-body">
+          <div class="step-cmd">Create a file named main.py with the following content:
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: str | None = None):
+    return {"item_id": item_id, "q": q}</div>
+          <div class="step-meta">
+            <span>📎 README.md - Example > Create it section</span>
+            <span
+              class="conf high">99% confidence</span>
+            <span>Create the main application file with two example endpoints</span>
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="step">
+        <div class="step-icon neutral">4</div>
+        <div class="step-body">
+          <div class="step-cmd">fastapi dev</div>
+          <div class="step-meta">
+            <span>📎 README.md - Example > Run it section</span>
+            <span
+              class="conf high">95% confidence</span>
+            <span>Start the FastAPI development server with auto-reload enabled, serving at http://127.0.0.1:8000</span>
+          </div>
+          
+          <div style="margin-top:.3rem;font-size:.75rem;color:var(--orange)">
+            ⚠️ Assumes: The fastapi CLI command is available after installing fastapi[standard], The command is run from the directory containing main.py
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- FRICTION BREAKDOWN -->
+    
+
+    <!-- COST ESTIMATE -->
+    
+
+    <!-- EXECUTION TIMELINE -->
+    
+
+    <!-- FRICTION EVENTS DETAIL -->
+    
+
+    <!-- FIX SUGGESTIONS -->
+    
+
+    <!-- FOOTER -->
+    <footer>
+      Generated by <a href="https://github.com/ghost-dev/ghost-dev">👻 ghost.dev</a> — The Phantom Developer<br>
+      <span style="font-size:.65rem;margin-top:.25rem;display:inline-block">2026-03-28 22:08 UTC</span>
+    </footer>
+
+  </div>
+</body>
+
+</html>

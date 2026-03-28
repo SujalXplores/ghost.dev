@@ -1,0 +1,9 @@
+FROM ubuntu:24.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl git wget sudo ca-certificates coreutils && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    useradd -m -s /bin/bash ghostdev && \
+    echo "ghostdev ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+USER ghostdev
+WORKDIR /home/ghostdev
