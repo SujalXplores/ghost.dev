@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "ghost-dev"
 version = "0.1.0"
-description = "The Phantom Developer — AI agent that tests your repo's onboarding docs"
+description = "The Phantom Developer - AI agent that tests your repo's onboarding docs"
 requires-python = ">=3.11"
 license = "MIT"
 readme = "README.md"

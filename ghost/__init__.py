@@ -1,2 +1,2 @@
-"""ghost.dev — The Phantom Developer"""
+"""ghost.dev - The Phantom Developer"""
 __version__ = "0.1.0"

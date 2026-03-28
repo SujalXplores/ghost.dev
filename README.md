@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>The Phantom Developer</strong><br>
-  <em>Every repo claims easy setup. ghost.dev proves them wrong — or right.</em>
+  <em>Every repo claims easy setup. ghost.dev proves them wrong - or right.</em>
 </p>
 
 <p align="center">
@@ -20,7 +20,7 @@
 
 An AI agent that simulates a **brand-new developer** onboarding onto any GitHub repository from absolute zero. It reads the docs, follows setup instructions step-by-step inside a fresh Docker container, and logs every failure, ambiguity, and undocumented assumption as a **friction event**.
 
-The ghost doesn't know your framework. It doesn't know your conventions. If the README doesn't say "install Node," it won't install Node. It's the most literal, naive developer possible — and that's the point.
+The ghost doesn't know your framework. It doesn't know your conventions. If the README doesn't say "install Node," it won't install Node. It's the most literal, naive developer possible - and that's the point.
 
 ```
 ghost run https://github.com/fastapi/fastapi --no-docker
@@ -31,7 +31,7 @@ ghost run https://github.com/fastapi/fastapi --no-docker
   ✓ 23 docs found (python)
   ✓ 4 steps (depth=quick)
 
-──────────── 👻 ghost.dev — doc analysis ────────────
+──────────── 👻 ghost.dev - doc analysis ────────────
 
  Repository      fastapi/fastapi
  Docs scanned    23
@@ -54,19 +54,19 @@ reads docs   AI gets    runs in     classifies    terminal +
 
 Six-stage pipeline. Each stage does one thing well:
 
-1. **Scanner** — Finds README, CONTRIBUTING, Makefile, package.json, CI workflows, env templates, version files. 23+ file patterns.
-2. **Planner** — AI extracts ordered setup steps from docs. Nothing else. Confidence scores, assumptions, prerequisites — all tracked.
-3. **Executor** — Runs each step in a bare `ubuntu:24.04` Docker container. Sandboxed. Resource-limited. Timed.
-4. **Observer** — Classifies each result: success, failure, ambiguity, partial. AI-powered with heuristic fallback.
-5. **Recoverer** — On failure, AI diagnoses the error and attempts self-recovery. Like a real dev reading stack traces.
-6. **Reporter** — Friction score, letter grade, cost estimate, timeline, fix suggestions. Terminal + self-contained HTML.
+1. **Scanner** - Finds README, CONTRIBUTING, Makefile, package.json, CI workflows, env templates, version files. 23+ file patterns.
+2. **Planner** - AI extracts ordered setup steps from docs. Nothing else. Confidence scores, assumptions, prerequisites - all tracked.
+3. **Executor** - Runs each step in a bare `ubuntu:24.04` Docker container. Sandboxed. Resource-limited. Timed.
+4. **Observer** - Classifies each result: success, failure, ambiguity, partial. AI-powered with heuristic fallback.
+5. **Recoverer** - On failure, AI diagnoses the error and attempts self-recovery. Like a real dev reading stack traces.
+6. **Reporter** - Friction score, letter grade, cost estimate, timeline, fix suggestions. Terminal + self-contained HTML.
 
 ## Quick Start
 
-Zero-install — run it directly (like `npx`):
+Zero-install, run it directly (like `npx`):
 
 ```bash
-# Using uvx (recommended — fastest, no install)
+# Using uvx (recommended, fastest, no install)
 uvx ghost-dev run https://github.com/user/repo
 
 # Using pipx
@@ -86,7 +86,7 @@ First run prompts for an API key:
 👻 No API key found. Let's set one up.
 
   › 1. Anthropic  (recommended)
-    2. OpenRouter  (any model — Claude, GPT, Gemini, Llama)
+    2. OpenRouter  (any model: Claude, GPT, Gemini, Llama)
     3. OpenAI      (GPT models)
 ```
 
@@ -104,7 +104,7 @@ ghost run <repo_url_or_local_path> [options]
 | `--timeout <minutes>` | Max time per step (default: 5) |
 | `--model <name>` | AI model (default: claude-sonnet) |
 | `--output <path>` | HTML report path |
-| `--no-docker` | Doc analysis only — no execution |
+| `--no-docker` | Doc analysis only, no execution |
 | `--json-output` | Machine-readable JSON to stdout |
 | `--fail-threshold <n>` | Exit code 2 if friction score > n (CI mode) |
 | `--no-cache` | Bypass plan cache |
@@ -119,7 +119,7 @@ ghost run ./my-project --no-docker
 # Full pipeline in Docker
 ghost run https://github.com/user/repo --depth full
 
-# CI gate — fail if friction is too high
+# CI gate: fail if friction is too high
 ghost run . --json-output --fail-threshold 40
 
 # Use any model via OpenRouter
@@ -140,13 +140,13 @@ ghost --version      # Print version
 
 ghost.dev produces a **friction report** with:
 
-- **Friction Score** (0–100) and letter grade (A+ to F)
-- **Execution timeline** — every step with pass/fail, duration, exit code
-- **Friction events** — severity, root cause, category, suggested fix
-- **Self-recovery log** — what the ghost tried, what worked
-- **Cost estimate** — developer hours wasted × $100/hr × team size
-- **Fix suggestions** — concrete doc edits with before/after diffs
-- **HTML report** — self-contained, dark theme, print-ready, accessible
+- **Friction Score** (0-100) and letter grade (A+ to F)
+- **Execution timeline** with pass/fail, duration, exit code per step
+- **Friction events** with severity, root cause, category, suggested fix
+- **Self-recovery log** showing what the ghost tried and what worked
+- **Cost estimate** of developer hours wasted per onboarding
+- **Fix suggestions** with concrete doc edits (before/after diffs)
+- **HTML report** that is self-contained, dark theme, print-ready, accessible
 
 A sample report from running against FastAPI is included in [`demo/fastapi-report.html`](demo/fastapi-report.html).
 
@@ -167,7 +167,7 @@ ghost/
 ├── cli.py              # Click CLI with Rich-styled help
 ├── config.py           # Config, API key management, cache
 ├── core/
-│   ├── _ai.py          # Multi-provider AI (Anthropic → OpenRouter → OpenAI)
+│   ├── _ai.py          # Multi-provider AI (Anthropic > OpenRouter > OpenAI)
 │   ├── _utils.py       # Shared JSON parsing, command safety validation
 │   ├── scanner.py      # Repo doc scanner (23+ file patterns)
 │   ├── planner.py      # AI step extraction with SQLite caching
@@ -182,7 +182,7 @@ ghost/
 │   ├── friction.py     # FrictionEvent model
 │   └── report.py       # GhostReport with scoring, grading, cost estimation
 ├── reporter/
-│   ├── terminal.py     # Rich terminal UI — panels, tables, progress
+│   ├── terminal.py     # Rich terminal UI with panels, tables, progress
 │   ├── html.py         # Jinja2 HTML report generator
 │   └── templates/
 │       └── report.html # Self-contained dark-theme HTML template
@@ -193,12 +193,12 @@ ghost/
 ## Engineering Highlights
 
 **Multi-provider AI with automatic fallback**
-Anthropic → OpenRouter → OpenAI. If one fails, the next picks up. OpenRouter gives access to any model — Claude, GPT, Gemini, Llama, DeepSeek — through a single key.
+Anthropic > OpenRouter > OpenAI. If one fails, the next picks up. OpenRouter gives access to any model (Claude, GPT, Gemini, Llama, DeepSeek) through a single key.
 
 **Security-first execution**
 - Docker containers are sandboxed with 2GB RAM / 2 CPU limits
 - AI-generated recovery commands are validated against a dangerous-pattern blocklist before execution
-- No `curl | bash`, no `rm -rf /`, no fork bombs — even inside the container
+- No `curl | bash`, no `rm -rf /`, no fork bombs, even inside the container
 - `shlex.quote` for all shell arguments
 
 **Intelligent caching**

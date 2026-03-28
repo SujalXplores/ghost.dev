@@ -6,7 +6,7 @@ import re
 
 logger = logging.getLogger("ghost")
 
-# Patterns that should never be executed — even inside Docker
+# Patterns that should never be executed - even inside Docker
 _DANGEROUS_PATTERNS = [
     re.compile(r"\brm\s+-rf\s+/\s*$"),          # rm -rf /
     re.compile(r"\brm\s+-rf\s+/[^h]"),           # rm -rf /anything (except /home)

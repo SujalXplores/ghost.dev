@@ -1,4 +1,4 @@
-"""ghost.dev CLI — The Phantom Developer."""
+"""ghost.dev CLI - The Phantom Developer."""
 
 from __future__ import annotations
 
@@ -61,7 +61,7 @@ class GhostGroup(click.Group):
 @click.group(cls=GhostGroup)
 @click.version_option(version="0.1.0", prog_name="ghost.dev")
 def main():
-    """👻 ghost.dev — The Phantom Developer."""
+    """👻 ghost.dev - The Phantom Developer."""
     pass
 
 
@@ -138,7 +138,7 @@ def _print_error(e: Exception):
     msg = str(e)
     console.print()
     if "onnect" in msg or "WinError" in msg or "refused" in msg:
-        console.print("  [red]✗ Network error — can't reach the AI provider.[/red]")
+        console.print("  [red]✗ Network error - can't reach the AI provider.[/red]")
         console.print("    Check your connection or run [cyan]ghost setup[/cyan] to switch providers.")
     elif "API" in msg or "key" in msg.lower() or "401" in msg or "auth" in msg.lower():
         console.print(f"  [red]✗ AI provider error:[/red] [dim]{msg[:120]}[/dim]")
@@ -371,7 +371,7 @@ def _extract_repo_name(repo: str) -> str:
             return name
     # Strip query params and fragments from URLs
     r = r.split("?")[0].split("#")[0]
-    # Local path — resolve "." and ".." to actual directory name
+    # Local path - resolve "." and ".." to actual directory name
     p = Path(r).resolve()
     if p.is_dir():
         return p.name
@@ -404,9 +404,9 @@ def _resolve_repo(repo: str) -> tuple[str | None, str]:
         if "not found" in err.lower() or "404" in err:
             return None, f"Repository not found: {repo}"
         if "auth" in err.lower() or "403" in err or "could not read" in err.lower():
-            return None, "Authentication required — is this a private repo?"
+            return None, "Authentication required - is this a private repo?"
         if "timeout" in err.lower() or "timed out" in err.lower():
-            return None, "Clone timed out — the repo may be very large or the network is slow."
+            return None, "Clone timed out - the repo may be very large or the network is slow."
         # Include the actual error for debugging
         short_err = err.split("\n")[0][:150]
         return None, f"Clone failed: {short_err}"
@@ -605,8 +605,8 @@ def _prompt_for_key():
     import ghost.config as cfg
 
     providers = [
-        ("ANTHROPIC_API_KEY", "Anthropic", "https://console.anthropic.com/", "recommended — direct, fastest"),
-        ("OPENROUTER_API_KEY", "OpenRouter", "https://openrouter.ai/keys", "any model — Claude, GPT, Gemini, Llama"),
+        ("ANTHROPIC_API_KEY", "Anthropic", "https://console.anthropic.com/", "recommended, direct, fastest"),
+        ("OPENROUTER_API_KEY", "OpenRouter", "https://openrouter.ai/keys", "any model: Claude, GPT, Gemini, Llama"),
         ("OPENAI_API_KEY", "OpenAI", "https://platform.openai.com/api-keys", "GPT models"),
     ]
 

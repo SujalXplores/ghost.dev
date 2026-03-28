@@ -55,7 +55,7 @@ def plan_setup(scan: ScanResult, model: str = "", use_cache: bool = True) -> Pla
 
     user_msg = f"Here are all the documentation files from the repository:\n{doc_context}"
 
-    # Try up to 2 times — AI sometimes returns malformed JSON on first attempt
+    # Try up to 2 times - AI sometimes returns malformed JSON on first attempt
     last_error = None
     for attempt in range(2):
         try:
@@ -67,10 +67,10 @@ def plan_setup(scan: ScanResult, model: str = "", use_cache: bool = True) -> Pla
             last_error = e
             continue
         except Exception as e:
-            # AI call itself failed (network, auth, etc.) — don't retry
+            # AI call itself failed (network, auth, etc.) - don't retry
             raise
 
-    # Both attempts failed to parse — return empty plan, don't cache it
+    # Both attempts failed to parse - return empty plan, don't cache it
     return PlanResult(
         steps=[],
         detected_project_type=scan.detected_project_type,

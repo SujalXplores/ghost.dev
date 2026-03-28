@@ -38,7 +38,7 @@ Return ONLY valid JSON, no markdown fences:
 
 def observe(step: SetupStep, result: ExecResult) -> tuple[str, FrictionEvent | None]:
     """Analyze a step execution result. Returns (status, optional friction event)."""
-    # Quick success heuristic — skip AI call for obvious successes
+    # Quick success heuristic - skip AI call for obvious successes
     if result.exit_code == 0 and not result.timed_out:
         stderr_lower = result.stderr.lower()
         if not any(w in stderr_lower for w in ["error", "warn", "fail", "deprecat"]):

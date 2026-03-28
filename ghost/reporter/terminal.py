@@ -1,4 +1,4 @@
-"""Rich terminal output for ghost.dev — polished UI/UX."""
+"""Rich terminal output for ghost.dev - polished UI/UX."""
 
 from rich.console import Console, Group
 from rich.panel import Panel
@@ -212,7 +212,7 @@ def _print_fixes(report: GhostReport):
 def print_no_docker_report(report: GhostReport):
     plan = report.plan
     console.print()
-    console.print(Rule("[bold white]👻 ghost.dev — doc analysis[/bold white]", style="bright_cyan"))
+    console.print(Rule("[bold white]👻 ghost.dev - doc analysis[/bold white]", style="bright_cyan"))
     console.print()
 
     # Info row

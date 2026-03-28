@@ -67,7 +67,7 @@ SEVERITY_WEIGHTS = {
 }
 UNRECOVERED_PENALTY = 5
 
-# Cache (lazy — created on first use, not at import)
+# Cache (lazy - created on first use, not at import)
 CACHE_DIR = Path.home() / ".ghost-dev" / "cache"
 CACHE_DB = CACHE_DIR / "ghost_cache.db"
 

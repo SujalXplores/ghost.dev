@@ -22,7 +22,7 @@ class TestSetupStep:
             SetupStep(step_number=1, action="x", source="x", confidence=-0.1)
 
     def test_extra_fields_ignored(self):
-        """AI responses often include extra fields — they should be silently ignored."""
+        """AI responses often include extra fields - they should be silently ignored."""
         step = SetupStep(
             step_number=1, action="npm install", source="README.md", confidence=0.8,
             extra_field="should be ignored", another="also ignored",

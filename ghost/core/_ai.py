@@ -1,6 +1,6 @@
-"""Shared AI call helper — Anthropic primary, OpenRouter, OpenAI fallback.
+"""Shared AI call helper - Anthropic primary, OpenRouter, OpenAI fallback.
 
-Priority chain: Anthropic → OpenRouter → OpenAI.
+Priority chain: Anthropic -> OpenRouter -> OpenAI.
 All calls use streaming disabled + tight timeouts for speed.
 """
 
@@ -30,7 +30,7 @@ OPENROUTER_MODEL_MAP = {
     "llama-scout": "meta-llama/llama-4-scout",
 }
 
-# Timeout for AI calls (seconds) — keep things snappy
+# Timeout for AI calls (seconds) - keep things snappy
 _HTTP_TIMEOUT = 120.0
 
 
@@ -74,10 +74,10 @@ def _call_anthropic(system: str, user: str, model: str) -> str:
 
     client = anthropic.Anthropic(
         api_key=cfg.ANTHROPIC_API_KEY,
-        base_url="https://api.anthropic.com",  # Force direct — bypass any local proxy
+        base_url="https://api.anthropic.com",  # Force direct - bypass any local proxy
         timeout=_HTTP_TIMEOUT,
     )
-    # Resolve model name — latest Anthropic API IDs
+    # Resolve model name - latest Anthropic API IDs
     api_model = model
     if "sonnet" in model and "/" not in model and "4" not in model:
         api_model = "claude-sonnet-4-6"
@@ -96,7 +96,7 @@ def _call_anthropic(system: str, user: str, model: str) -> str:
 
 
 def _call_openrouter(system: str, user: str, model: str) -> str:
-    """Call OpenRouter API — OpenAI-compatible endpoint, any model."""
+    """Call OpenRouter API - OpenAI-compatible endpoint, any model."""
     from openai import OpenAI
 
     client = OpenAI(
